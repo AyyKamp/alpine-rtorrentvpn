@@ -1,11 +1,9 @@
-Alpine rtorrent + OpenVPN + ruTorrent/Flood docker container
+Alpine rtorrent + OpenVPN docker container
 ============================================================
 
 Alpine Linux : https://alpinelinux.org/
 
 rtorrent : https://github.com/rakshasa/rtorrent
-
-rutorrent : https://github.com/Novik/ruTorrent
 
 flood : https://github.com/jfurrow/flood
 
@@ -44,10 +42,3 @@ Completed downloads are stored in /data/downloads.
 #### Volumes
 - **/data** : downloaded torrents, watch directory, session files...
 - **/config** : OpenVPN (.ovpn) configuration file
-
-#### Ports
-- **8080** : HTTP access for ruTorrent/flood
-
-#### WEB UI
-- ruTorrent : `http://<host ip>:8080`
-- flood : `http://<host ip>:8080/flood/`

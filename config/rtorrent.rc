@@ -87,9 +87,3 @@ schedule2 = scgi_permission, 0, 0, "execute.nothrow=chmod,\"g+w,o=\",/tmp/rtorre
 schedule2 = insufficient_disk_space, 1, 30, close_low_diskspace=500M
 schedule2 = session_save, 1200, 43200, ((session.save))
 
-# For rutorrent
-encoding_list = UTF-8
-scgi_local = /tmp/rtorrent_scgi.sock
-
-# Start rutorrent plugins
-execute2 = {sh,-c,/usr/bin/php7 /var/www/rutorrent/php/initplugins.php &}

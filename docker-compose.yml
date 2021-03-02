@@ -1,0 +1,19 @@
+version: "3.2"
+services:
+  rtorrent-vpn:
+    image: ayykamp/alpine-rtorrentvpn:latest
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "49314:49314"
+    volumes:
+      - /mnt/local/downloads/torrents/rtorrentvpn:/data
+      - /opt/rtorrentvpn:/config
+    environment:
+      UID: 1000
+      GUID: 1000
+
+networks:
+  default:
+    external:
+      name: cloudbox

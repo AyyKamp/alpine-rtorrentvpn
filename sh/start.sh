@@ -74,10 +74,6 @@ for server in $(/usr/bin/awk '$1=="remote"' "${VPN_CONFIG}") ; do
 done ;
 IFS=${OLDIFS}
 
-# allow nginx for rutorrent/flood
-iptables -A INPUT -i ${NET_IF} -p tcp --dport 8080 -j ACCEPT
-iptables -A OUTPUT -o ${NET_IF} -p tcp --sport 8080 -j ACCEPT
-
 # Loopback
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
@@ -120,7 +116,7 @@ if [ "${UID}" != "${CUR_UID}" ]; then
   usermod -u ${UID} rtorrent
 fi
 
-chown -R rtorrent:rtorrent /data /var/www/rutorrent /home/rtorrent/ /var/tmp/nginx
+chown -R rtorrent:rtorrent /data /home/rtorrent/ /var/tmp/nginx
 
 # start everything
 ##################
