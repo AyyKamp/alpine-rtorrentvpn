@@ -77,7 +77,7 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && make install \
 
 # Set-up permissions
-  && chown -R rtorrent:rtorrent /var/www/rutorrent /home/rtorrent/ /var/tmp/nginx  \
+  && chown -R rtorrent:rtorrent /home/rtorrent/ /var/tmp/nginx  \
 
 # cleanup
   && strip -s /usr/local/bin/mediainfo \
