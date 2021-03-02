@@ -76,29 +76,6 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && cd /tmp/mediainfo/MediaInfo/Project/GNU/CLI \
   && make install \
 
-# Install ruTorrent
-  && cd /var/www \
-  && curl -LOk https://github.com/Novik/ruTorrent/archive/master.zip \
-  && unzip master.zip \
-  && rm -f master.zip \
-  && mv ruTorrent-master rutorrent \
-  && chmod -R 777 /var/www/rutorrent/share/ \
-  && mkdir -p /var/www/rutorrent/tmp \
-# Add some extra stuff
-  && git clone https://github.com/QuickBox/club-QuickBox /var/www/rutorrent/plugins/theme/themes/club-QuickBox \
-  && git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/webapps/rutorrent/plugins/theme/themes/MaterialDesign \
-  && cd /var/www/webapps/rutorrent/plugins/ \
-  && git clone https://github.com/xombiemp/rutorrentMobile \
-  && git clone https://github.com/dioltas/AddZip \
-
-# Install flood
-  && mkdir -p /usr/local/flood \
-  && cd /usr/local/flood \
-  && git clone https://github.com/jesec/flood.git . \
-  && mv /tmp/config.js config.js \
-  && npm install -g node-gyp \
-  && npm install \
-
 # Set-up permissions
   && chown -R rtorrent:rtorrent /var/www/rutorrent /home/rtorrent/ /var/tmp/nginx  \
 
@@ -126,16 +103,10 @@ COPY config/rtorrentvpn_supervisord.conf /etc/supervisor.d/rtorrentvpn.ini
 
 # Set-up rTorrent
 COPY config/rtorrent.rc /home/rtorrent/rtorrent.rc
-# Set-up ruTorrent
-COPY config/rutorrent_config.php /var/www/rutorrent/conf/config.php
-RUN chown rtorrent:rtorrent /home/rtorrent/rtorrent.rc /var/www/rutorrent/conf/config.php
 # COPY config/rutorrent_plugins.ini /var/www/rutorrent/conf/plugins.ini
 # COPY config/rutorrent_autotools.dat /var/www/rutorrent/share/settings/autotools.dat
 # RUN sed -i -e "s/\$autowatch_interval =.*/\$autowatch_interval = 10;/g" /var/www/rutorrent/plugins/autotools/conf.php
 
 VOLUME /data /config
-
-# WebUI
-EXPOSE 8080
 
 CMD ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]
