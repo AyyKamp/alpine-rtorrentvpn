@@ -24,14 +24,14 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
 
 # compile mktorrent
   && cd /tmp \
-  && git clone https://github.com/esmil/mktorrent \
+  && git clone https://github.com/pobrn/mktorrent.git \
   && cd /tmp/mktorrent \
   && make -j ${NB_CORES} \
   && make install \
 
 # compile xmlrpc-c
   && cd /tmp \
-  && curl -O https://netix.dl.sourceforge.net/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.39.13/xmlrpc-c-1.39.13.tgz \
+  && curl -O https://iweb.dl.sourceforge.net/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.39.13/xmlrpc-c-1.39.13.tgz \
   && tar zxvf xmlrpc-c-1.39.13.tgz \
   && cd xmlrpc-c-1.39.13 \
   && ./configure --enable-libxml2-backend --disable-cgi-server --disable-libwww-client --disable-wininet-client --disable-abyss-server \
@@ -94,15 +94,10 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
 # Install flood
   && mkdir -p /usr/local/flood \
   && cd /usr/local/flood \
-  && git clone https://github.com/jfurrow/flood . \
+  && git clone https://github.com/jesec/flood.git . \
   && mv /tmp/config.js config.js \
   && npm install -g node-gyp \
   && npm install \
-  # workaround for "Illegal instruction" when using argon2 on some CPUs
-  && sed -i -e "s/\"-march=native\", //g" /usr/local/flood/node_modules/argon2/binding.gyp \
-  && npm rebuild argon2 \
-  && npm cache clean --force \
-  && npm run build \
 
 # Set-up permissions
   && chown -R rtorrent:rtorrent /var/www/rutorrent /home/rtorrent/ /var/tmp/nginx  \
